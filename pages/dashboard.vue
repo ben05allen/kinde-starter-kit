@@ -10,6 +10,9 @@
       <p>
         {{ $auth.user }}
       </p>
+      <p>
+        {{ permissions }}
+      </p>
     </div>
     <section class="next-steps-section">
       <h2 class="text-heading-1">Next steps for you</h2>
@@ -21,4 +24,16 @@
 definePageMeta({
   middleware: ["auth-logged-in"],
 });
+
+const client = useKindeClient();
+
+const { data: permissions } = await useAsyncData(async () => {
+  const { permissions } = (await client?.getPermissions()) ?? {};
+  console.log(permissions);
+  return permissions;
+});
+
+// const { data: hasAccess } = await useAsyncData(async () => {
+//   return (await client?.getPermissions("upload:csvs")) ?? {};
+// });
 </script>
