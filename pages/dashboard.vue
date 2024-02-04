@@ -11,7 +11,7 @@
         {{ $auth.user }}
       </p>
       <p>
-        {{ permissions }}
+        {{ accessToken }}
       </p>
     </div>
     <section class="next-steps-section">
@@ -27,11 +27,15 @@ definePageMeta({
 
 const client = useKindeClient();
 
-const { data: permissions } = await useAsyncData(async () => {
-  const { permissions } = (await client?.getPermissions()) ?? {};
-  console.log(permissions);
-  return permissions;
+const { data: accessToken } = await useAsyncData(async () => {
+  return await client?.getToken();
 });
+
+// const { data: permissions } = await useAsyncData(async () => {
+//   const { permissions } = (await client?.getPermissions()) ?? {};
+//   console.log(permissions);
+//   return permissions;
+// });
 
 // const { data: hasAccess } = await useAsyncData(async () => {
 //   return (await client?.getPermissions("upload:csvs")) ?? {};
