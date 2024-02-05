@@ -25,7 +25,12 @@ definePageMeta({
   middleware: ["auth-logged-in"],
 });
 
+const options = {
+  audience: "https://rallythedata.kinde.com/api",
+};
+
 const client = useKindeClient();
+client.options = options;
 
 const { data: accessToken } = await useAsyncData(async () => {
   return await client?.getToken();
